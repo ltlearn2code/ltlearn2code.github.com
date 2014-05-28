@@ -57,15 +57,18 @@ h1{
 
 .pages-of-pages {
     color: white!important;
+    float: right;
+    margin-right:40px;
 }
 
 .col-md-4 {
     margin-top: 5px;
-    width: 35% !important;
+    width: 40% !important;
 }
 
-.col-md-3{
+.col-md-2{
     margin-top: 10px;
+    float:right;
 }
 
 
