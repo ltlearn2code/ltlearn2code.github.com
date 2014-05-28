@@ -8,7 +8,6 @@
 .flickr-photo{
     display: inline-block;
     width: 75px;
-    border: 1px solid #cccccc;
     margin: 5px;
     height: 75px;
     background-position: center;
@@ -49,7 +48,7 @@
 }
 
 body{
-    background: #222222;
+    background: none repeat scroll 0 0 #222222;
 }
 
 h1{
@@ -62,8 +61,12 @@ h1{
 
 .col-md-4 {
     margin-top: 5px;
+    width: 35% !important;
 }
 
 .col-md-3{
     margin-top: 10px;
 }
+
+
+

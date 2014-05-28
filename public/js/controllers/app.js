@@ -1,20 +1,13 @@
 /**
  * Created by lantran on 5/26/14.
  */
-function FlickrCtrl($scope, $routeParams, $location, Flickr){
+function FlickrCtrl($scope, Flickr){
 
     $scope.photos = [];
-    $scope.currentPhoto= null;
-    $scope.prevPhoto = null;
-    $scope.nextPhoto = null;
-    $scope.currentPhotoSrc ='';
-    $scope.text = '';
-    $scope.modalOpened = null;
     $scope.search = function(search, page){
         $scope.loading = true;
         var promise = Flickr.search(search, page);
         promise.then(function(data){
-            $scope.photos = data.photos;
             $scope.photos = data.photos.photo;
             $scope.page = data.photos.page;
             $scope.pages = data.photos.pages;
@@ -25,16 +18,6 @@ function FlickrCtrl($scope, $routeParams, $location, Flickr){
             console.log('Failed: ' + err);
             $scope.loading = false;
         });
-    }
-
-    $scope.selectPhoto = function(id){
-        $('.photoModal').modal('hide');
-        console.log('redirect: '+id);
-        $location.path('/' + String(id));
-    }
-
-    $scope.isModalOpened =function(){
-        console.log($('.photoModal').hasClass('in'));
     }
 
     $scope.loading = true;
@@ -64,35 +47,6 @@ function FlickrCtrl($scope, $routeParams, $location, Flickr){
             pageNav.push({text: 'Next >>', number: (currentPage + 1), current: false});
         }
         $scope.pageNav = pageNav;
-    }
-
-    $scope.openModal = function(){
-        var self = this;
-        $('.photoModal').modal('show');
-        if($scope.modalOpened) return;
-
-        $('.photoModal').modal('show');
-        $('.photoModal').on('hide.bs.modal', function(e){
-            $scope.modalOpened = false;
-            $location.path('/');
-        });
-        $scope.modalOpened = true;
-    }
-
-    $scope.setCurrentPhoto = function(id){
-        var currentIndex = 0;
-        var currentPhoto = null;
-        angular.forEach($scope.photos, function(value, index){
-            if(value.id == id){
-                currentPhoto = value;
-                currentIndex = parseInt(index);
-                return;
-            }
-        });
-        $scope.currentPhoto = (currentPhoto)? currentPhoto  : null ;
-        $scope.prevPhoto = (currentIndex -1 >= 0)? $scope.photos[currentIndex - 1]  : null ;
-        $scope.nextPhoto = ((currentIndex + 1) <= $scope.photos.length)? $scope.photos[currentIndex + 1]  : null ;
-        $scope.currentPhotoSrc = (currentPhoto)?'http://farm' + $scope.currentPhoto.farm + '.static.flickr.com/' + $scope.currentPhoto.server + '/' + $scope.currentPhoto.id + '_' + $scope.currentPhoto.secret + '_z.jpg' : null;
     }
 
     $scope.search();
